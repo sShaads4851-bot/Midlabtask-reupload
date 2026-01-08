@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Login</title>
+    <script>
+        function validateForm() {
+            const userField = document.getElementById('uname').value;
+            const passField = document.getElementById('pwd').value;
+
+            const nameMsg = document.getElementById('uErr');
+            const passMsg = document.getElementById('pErr');
+
+            if (!userField) {
+                nameMsg.textContent = 'Name is required';
+            } else {
+                nameMsg.textContent = '';
+            }
+
+            if (!passField) {
+                passMsg.textContent = 'Password is required';
+            } else {
+                passMsg.textContent = '';
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .wrapper {
+            width: 80%;
+            margin: auto;
+            border: 2px solid #000;
+        }
+        .topbar {
+            padding: 12px;
+            border-bottom: 2px solid #000;
+        }
+        .topbar img {
+            width: 120px;
+        }
+        .navlinks {
+            float: right;
+        }
+        .navlinks a {
+            margin-left: 12px;
+            text-decoration: none;
+        }
+        .section {
+            height: 360px;
+            text-align: center;
+        }
+        .login-panel {
+            width: 390px;
+            border: 1px solid gray;
+            margin: 55px auto;
+            padding: 15px;
+            text-align: left;
+        }
+        footer {
+            border-top: 2px solid #000;
+            text-align: center;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="wrapper">
+
+    <div class="topbar">
+        <table width="100%">
+            <tr>
+                <td>
+                    <h2><span style="color: forestgreen; font-size: 40px; font-weight: bold; font-style: italic;">X</span>company</h2>
+                </td>
+                <td align="right">
+                    <a href="#">Home</a> | 
+                    <a href="#">Login</a> | 
+                    <a href="#">Signup</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section">
+        <div class="login-panel">
+            <b>LOGIN</b><br><br>
+
+            User Name : <input type="text" id="uname" placeholder="Enter your name"><br>
+            <p id="uErr" style="color:red"></p>
+
+            Password &nbsp;&nbsp;: <input type="password" id="pwd" placeholder="Enter your password"><br>
+            <p id="pErr" style="color:red"></p>
+
+            <hr>
+
+            <label><input type="checkbox"> Remember Me</label><br><br>
+            <button onclick="validateForm()">Submit</button>
+            <a href="#">Forgot Password?</a>
+        </div>
+    </div>
+
+    <footer>
+        Copyright © 2017
+    </footer>
+
+</div>
+
+</body>
+</html>

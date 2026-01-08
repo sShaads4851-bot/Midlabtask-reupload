@@ -1,0 +1,220 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Event Registration</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f2f2;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            width: 650px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 6px;
+            margin-bottom: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        button {
+            padding: 10px 15px;
+            background: #0066cc;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0052a3;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+            display: none;
+        }
+
+        .success {
+            color: green;
+            font-size: 14px;
+            display: none;
+            margin-top: 10px;
+        }
+
+        #analyticsBox {
+            background: #f8f8f8;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .statItem {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h2>Event Registration Form</h2>
+
+        <form id="registrationForm">
+
+            <label>Full Name</label>
+            <input type="text" id="fullName">
+            <div id="nameError" class="error">Please enter a valid name (min 3 letters).</div>
+
+            <label>Email Address</label>
+            <input type="email" id="emailAddress">
+            <div id="emailError" class="error">Please enter a valid email.</div>
+
+            <label>Attendance Type</label>
+            <select id="attendanceType">
+                <option value="">Select One</option>
+                <option value="Virtual">Virtual</option>
+                <option value="In-Person">In-Person</option>
+            </select>
+            <div id="attendanceError" class="error">Please select attendance type.</div>
+
+            <label>Comments (Optional)</label>
+            <textarea id="comments" rows="3"></textarea>
+
+            <button type="submit">Submit</button>
+            <button type="button" id="clearBtn">Reset</button>
+
+            <div id="successMsg" class="success">Registration submitted successfully.</div>
+
+        </form>
+
+        <hr>
+
+        <button id="toggleAnalyticsBtn">Show Event Analytics</button>
+
+        <div id="analyticsBox">
+            <h3>Event Analytics</h3>
+
+            <div class="statItem">Total Registrants: <strong id="totalCount">0</strong></div>
+            <div class="statItem">Virtual: <strong id="virtualCount">0</strong></div>
+            <div class="statItem">In-Person: <strong id="inpersonCount">0</strong></div>
+
+            <h4>Recent Registrants</h4>
+            <div id="registrantList"></div>
+        </div>
+
+    </div>
+
+    <script>
+
+        let attendees = [];
+
+        const form = document.getElementById("registrationForm");
+        const fullName = document.getElementById("fullName");
+        const emailAddress = document.getElementById("emailAddress");
+        const attendanceType = document.getElementById("attendanceType");
+        const comments = document.getElementById("comments");
+
+        const nameError = document.getElementById("nameError");
+        const emailError = document.getElementById("emailError");
+        const attendanceError = document.getElementById("attendanceError");
+        const successMsg = document.getElementById("successMsg");
+
+        const totalCount = document.getElementById("totalCount");
+        const virtualCount = document.getElementById("virtualCount");
+        const inpersonCount = document.getElementById("inpersonCount");
+        const registrantList = document.getElementById("registrantList");
+        const analyticsBox = document.getElementById("analyticsBox");
+
+        document.getElementById("toggleAnalyticsBtn").addEventListener("click", function () {
+            if (analyticsBox.style.display === "block") {
+                analyticsBox.style.display = "none";
+                this.textContent = "Show Event Analytics";
+            } else {
+                analyticsBox.style.display = "block";
+                this.textContent = "Hide Event Analytics";
+                updateAnalytics();
+            }
+        });
+
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            let valid = true;
+
+            if (fullName.value.trim().length < 3) {
+                nameError.style.display = "block";
+                valid = false;
+            } else {
+                nameError.style.display = "none";
+            }
+
+            const emailPattern = /\S+@\S+\.\S+/;
+            if (!emailPattern.test(emailAddress.value)) {
+                emailError.style.display = "block";
+                valid = false;
+            } else {
+                emailError.style.display = "none";
+            }
+
+            if (attendanceType.value === "") {
+                attendanceError.style.display = "block";
+                valid = false;
+            } else {
+                attendanceError.style.display = "none";
+            }
+
+            if (!valid) {
+                return;
+            }
+
+            attendees.push({
+                name: fullName.value,
+                email: emailAddress.value,
+                type: attendanceType.value,
+                note: comments.value
+            });
+
+            successMsg.style.display = "block";
+            setTimeout(() => successMsg.style.display = "none", 2000);
+
+            form.reset();
+            updateAnalytics();
+        });
+
+        document.getElementById("clearBtn").addEventListener("click", function () {
+            form.reset();
+        });
+
+        function updateAnalytics() {
+            totalCount.textContent = attendees.length;
+            virtualCount.textContent = attendees.filter(a => a.type === "Virtual").length;
+            inpersonCount.textContent = attendees.filter(a => a.type === "In-Person").length;
+
+            registrantList.innerHTML = "";
+
+            attendees.slice().reverse().forEach(att => {
+                const p = document.createElement("p");
+                p.textContent = att.name + " — " + att.type;
+                registrantList.appendChild(p);
+            });
+        }
+
+    </script>
+
+</body>
+</html>

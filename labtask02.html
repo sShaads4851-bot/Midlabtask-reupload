@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>User Panel</title>
+<style>
+    /* Same output, rewritten structure */
+    body { font-family: Arial, Helvetica, sans-serif; }
+
+    .wrap {
+        width: 80%;
+        margin: 0 auto;
+        border: 1px solid #000;
+    }
+
+    .top, .bottom {
+        padding: 15px;
+        border-bottom: 1px solid #000;
+    }
+    .bottom {
+        border-bottom: none;
+        border-top: 1px solid #000;
+        text-align: center;
+    }
+
+    .section {
+        display: flex;
+    }
+
+    .panel-left {
+        width: 30%;
+        padding: 15px;
+        border-right: 1px solid #000;
+    }
+
+    .panel-right {
+        width: 70%;
+        padding: 15px;
+    }
+
+    .panel-left ul { list-style: disc; margin-left: 18px; }
+
+    .panel-left a, .top a { text-decoration: none; color: purple; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+    <div class="top">
+        <table style="width:100%">
+            <tr>
+                <td>
+                    <h2><span style="color:forestgreen;font-size:40px;font-style:italic;font-weight:bold;">X</span>company</h2>
+                </td>
+                <td style="text-align:right;">
+                    Logged in as <a href="#">Bob</a> | <a href="#">Logout</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section">
+
+        <div class="panel-left">
+            <strong>Account</strong>
+            <hr />
+            <ul>
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">View Profile</a></li>
+                <li><a href="#">Edit Profile</a></li>
+                <li><a href="#">Change Profile Picture</a></li>
+                <li><a href="#">Change Password</a></li>
+                <li><a href="#">Logout</a></li>
+            </ul>
+        </div>
+
+        <div class="panel-right">
+            <strong>Welcome Bob</strong>
+        </div>
+
+    </div>
+
+    <div class="bottom">
+        Copyright © 2025
+    </div>
+
+</div>
+</body>
+</html>
